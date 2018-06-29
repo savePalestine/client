@@ -1,7 +1,28 @@
 <template>
   <div class="body-background">
-    <div v-if="gameState !== 'ready' " class="status">
+    <!-- <div v-if="gameState !== 'ready' " class="status">
       <p>Waiting for other player..</p>
+    </div> -->
+    <div class="">
+      <img src="http://mediad.publicbroadcasting.net/p/khpr/files/styles/x_large/public/201712/1200px-Operation_Crossroads_Baker_Edit.jpg" v-if="gameState !== 'ready' " alt="" style="position:fixed; width:100%">
+        <h1 style="color: white; position: fixed; margin: 25% 0 0 32%;" v-if="gameState !== 'ready'">Waiting Player 2</h1>
+      <div class="container" >
+        <div class="preloader-wrapper big active" v-if="gameState !== 'ready'" style="margin: 20% 0 0 45%;">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle">
+              </div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="" style="margin: -10% 0 0 -9%; position:fixed;">
       <img src="http://4.bp.blogspot.com/-aplXFI9fzIs/U-O901KtK4I/AAAAAAAAAgI/8jf7Zeo0ouA/s1600/explosion_time_animate.gif" alt="" v-if='rocket.maju<=70'>
@@ -11,14 +32,15 @@
         <h1>The winner is {{ winner }}</h1>
         <a class="btn waves-effect waves-light" @click='replay'>Play again!</a>
       </div>
-      <div class="col s3">
+      <div class="col s3" v-if="gameState == 'ready'">
         <img src="http://icons.iconarchive.com/icons/wikipedia/flags/256/ID-Indonesia-Flag-icon.png" alt="" style="width:5%; position:fixed; margin: 8% 0 0 7.5%;">
         <img src="https://vignette.wikia.nocookie.net/spacemonsters/images/8/85/PNGPIX-COM-Earth-Planet-Globe-World-Transparent-PNG-Image.png/revision/latest?cb=20171217074041&path-prefix=id" alt="" style="margin: 50% 0 0 10%;">
       </div>
-      <div class="track" style="padding-top:0%; position:fixed;">
+      <div class="track" style="padding-top:0%; position:fixed;" v-if="gameState == 'ready'">
         <img class="roket" src="https://image.flaticon.com/icons/png/128/214/214337.png" alt="" v-bind:style=" { margin: rocket.position + 'px' }"/>
       </div>
-      <div class="col s3">
+      <div class="col s3" v-if="gameState == 'ready'">
+
         <img src="http://icons.iconarchive.com/icons/wikipedia/flags/256/IL-Israel-Flag-icon.png" alt="" style="width:5%; position:fixed; margin: 8.3% 0 0 61%;">
         <img src="https://vignette.wikia.nocookie.net/spacemonsters/images/8/85/PNGPIX-COM-Earth-Planet-Globe-World-Transparent-PNG-Image.png/revision/latest?cb=20171217074041&path-prefix=id" alt="" style="margin: 53% 0 0 240%;">
       </div>
@@ -32,8 +54,8 @@
       </div>
     </div>
     <div class="" v-if="player != ''">
-      <a class="btn red" v-if='buttonActive == true && player == "Player1" && winner !== ""' @click='maju' style="margin: 0 0 0 6%;">Player 1</a>
-      <a class="btn" style="margin: 0 0 0 85%;" v-if='buttonActive == true && player == "Player2" && winner !== ""' @click='mundur'>Player 2</a>
+      <a class="btn red" v-if='buttonActive == true && player == "Player1"' @click='maju' style="margin: 0 0 0 6%;">Player 1</a>
+      <a class="btn" style="margin: 0 0 0 85%;" v-if='buttonActive == true && player == "Player2"' @click='mundur'>Player 2</a>
     </div>
   </div>
 </template>
@@ -58,6 +80,9 @@ export default {
     }
   },
   created () {
+    let self = this
+    var getRoomName = localStorage.getItem('roomname')
+    console.log(this.rocket)
 
   },
   mounted(){
@@ -99,6 +124,7 @@ export default {
           object.value += 10
           roomdatabase(getRoomName).set(object)
           console.log('adsfadsf',joinn)
+          
           roomdatabase(getRoomName).on('value',function(snapshot){
             self.rocket.maju = snapshot.val().value
             var array = ['0 0 0', self.rocket.maju]
@@ -115,6 +141,7 @@ export default {
       if (this.rocket.maju >= 70) {
         var self = this
         var getRoomName = localStorage.getItem('roomname')
+
         roomdatabase(getRoomName).once('value', function (snapshot) {
           let object = snapshot.val()
           self.rocket.maju = snapshot.val().value
@@ -124,6 +151,7 @@ export default {
           object.value -= 10
           roomdatabase(getRoomName).set(object)
           console.log('adsfadsf',joinn)
+          
           roomdatabase(getRoomName).on('value',function(snapshot){
             self.rocket.maju = snapshot.val().value
             var array = ['0 0 0', self.rocket.maju]
