@@ -1,6 +1,13 @@
 <template>
   <div class="body-background">
     <div class="container">
+      <!-- <audio controls>
+        <source :src="song.url" type="audio/ogg">
+      </audio> -->
+      <audio id="msc" controls autoplay>
+        <source src="@/assets/one-piece-ost-the-very-very-very-strongest-extended.mp3" type="audio/ogg">
+        <source src="@/assets/one-piece-ost-the-very-very-very-strongest-extended.mp3" type="audio/ogg">
+      </audio>
       <div class="register" style="background-color:transparent">
         <div class="container" style="padding-left:5%;">
           <div class="row">
@@ -31,6 +38,9 @@ export default {
     return {
       playername: ''
     }
+  },
+  created () {
+    document.getElementById('msc').play();
   },
   methods: {
     inputPlayerName () {
