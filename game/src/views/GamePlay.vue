@@ -1,17 +1,17 @@
 <template>
   <div class="">
-    <Homepage/>
+    <GamePlay/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Homepage from '@/components/Homepage.vue'
+import GamePlay from '@/components/GamePlay.vue'
 
 export default {
   name: 'home',
   components: {
-    Homepage
+    GamePlay
   }
 }
 </script>
