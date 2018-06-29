@@ -168,24 +168,9 @@ export default {
       this.winner = null
       this.rocket.maju = 550
       this.buttonActive = true
-
-      var self = this
-      var getRoomName = localStorage.getItem('roomname')
-      console.log(getRoomName)
-      roomdatabase(getRoomName).once('value', function (snapshot) {
-        let object = snapshot.val()
-        object.value = 550
-        console.log('????', object)
-        console.log('makan tuh tuhtuh')
-        console.log('SNAPSHOsdsds', object.value)
-        self.rocket.maju = object.value
-        console.log('kadjfalsdfljahsdflah')
-        console.log('SCOREVALUEMINEs', self.rocket.maju)
-        var array = ['0 0 0', self.rocket.maju]
-        var joinn = array.join(' ')
-        self.rocket.position = joinn
-        roomdatabase(getRoomName).set(object)
-      })
+      this.$store.dispatch('exit')
+      this.$router.push('/')
+      localStorage.clear()
     }
   }
 }

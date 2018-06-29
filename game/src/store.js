@@ -42,6 +42,16 @@ export default new Vuex.Store({
     },
     changePlayer2Name  (state, payload) {
       state.player2 = payload
+    },
+    remove (state, payload) {
+      state.checkroom = ''
+      state.playerName = ''
+      state.roomName = ''
+      state.statusGame = ''
+      state.gameState = ''
+      state.currentValue = ''
+      state.player1 = ''
+      state.player2 = ''
     }
   },
   actions: {
@@ -131,6 +141,9 @@ export default new Vuex.Store({
       })
 
       this.currentValue = 550
+    },
+    exit ({commit}) {
+      commit('remove')
     }
   }
 })

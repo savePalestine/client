@@ -4,7 +4,7 @@
       <!-- <audio controls>
         <source :src="song.url" type="audio/ogg">
       </audio> -->
-      <audio id="msc" controls autoplay>
+      <audio id="msc" autoplay>
         <source src="@/assets/one-piece-ost-the-very-very-very-strongest-extended.mp3" type="audio/ogg">
         <source src="@/assets/one-piece-ost-the-very-very-very-strongest-extended.mp3" type="audio/ogg">
       </audio>
