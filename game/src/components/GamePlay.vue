@@ -58,7 +58,13 @@ export default {
     }
   },
   created () {
+    let self = this
+    var getRoomName = localStorage.getItem('roomname')
+    console.log(this.rocket)
 
+
+  },
+  mounted(){
   },
   computed: {
     ...mapState([
@@ -94,13 +100,13 @@ export default {
           // console.log("snapshot update val ",snapshot.val())
           let object = snapshot.val()
           object.value += 10
-          console.log('????', object)
-          console.log('SNAPSHOsdsds', object.value)
-          self.rocket.maju = object.value
-          var array = ['0 0 0', self.rocket.maju]
-          var joinn = array.join(' ')
-          self.rocket.position = joinn
           roomdatabase(getRoomName).set(object)
+          roomdatabase(getRoomName).on('value',function(snapshot){
+            self.rocket.maju = snapshot.val().value
+            var array = ['0 0 0', self.rocket.maju]
+            var joinn = array.join(' ')
+            self.rocket.position = joinn
+          })
         })
       } else {
         this.buttonActive = false
@@ -115,16 +121,13 @@ export default {
         roomdatabase(getRoomName).once('value', function (snapshot) {
           let object = snapshot.val()
           object.value -= 10
-          console.log('????', object)
-          console.log('makan tuh tuhtuh')
-          console.log('SNAPSHOsdsds', object.value)
-          self.rocket.maju = object.value
-          console.log('kadjfalsdfljahsdflah')
-          console.log('SCOREVALUEMINEs', self.rocket.maju)
-          var array = ['0 0 0', self.rocket.maju]
-          var joinn = array.join(' ')
-          self.rocket.position = joinn
           roomdatabase(getRoomName).set(object)
+          roomdatabase(getRoomName).on('value',function(snapshot){
+            self.rocket.maju = snapshot.val().value
+            var array = ['0 0 0', self.rocket.maju]
+            var joinn = array.join(' ')
+            self.rocket.position = joinn
+          })
         })
       } else {
         this.buttonActive = false
