@@ -58,7 +58,12 @@ export default {
     }
   },
   created () {
-
+    var self = this
+    var getRoomName = localStorage.getItem('roomname')
+    roomdatabase(getRoomName).once('value', function (snapshot) {
+      let object = snapshot.val()
+      self.rocket.maju = snapshot.val().value
+    })
   },
   mounted(){
   },
@@ -90,9 +95,6 @@ export default {
       if (this.rocket.maju <= 1060) {
         var self = this
         var getRoomName = localStorage.getItem('roomname')
-        roomdatabase(getRoomName).once('value', function (snapshot) {
-          let object = snapshot.val()
-          self.rocket.maju = snapshot.val().value
           var array = ['0 0 0', self.rocket.maju]
           var joinn = array.join(' ')
           self.rocket.position = joinn
@@ -105,7 +107,6 @@ export default {
             var joinn = array.join(' ')
             self.rocket.position = joinn
           })
-        })
       } else {
         this.buttonActive = false
         this.winner = 'Player 1'
@@ -113,24 +114,20 @@ export default {
     },
     mundur () {
       if (this.rocket.maju >= 70) {
-        var self = this
-        var getRoomName = localStorage.getItem('roomname')
-        roomdatabase(getRoomName).once('value', function (snapshot) {
-          let object = snapshot.val()
-          self.rocket.maju = snapshot.val().value
           var array = ['0 0 0', self.rocket.maju]
           var joinn = array.join(' ')
           self.rocket.position = joinn
           object.value -= 10
           roomdatabase(getRoomName).set(object)
           console.log('adsfadsf',joinn)
+          var self = this
+          var getRoomName = localStorage.getItem('roomname')
           roomdatabase(getRoomName).on('value',function(snapshot){
             self.rocket.maju = snapshot.val().value
             var array = ['0 0 0', self.rocket.maju]
             var joinn = array.join(' ')
             self.rocket.position = joinn
           })
-        })
       } else {
         this.buttonActive = false
         this.winner = 'Player 2'
