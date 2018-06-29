@@ -32,10 +32,13 @@
         <a class="btn waves-effect waves-light" @click='replay'>Play again!</a>
       </div>
       <div class="col s3" v-if="gameState == 'ready'">
+        <h5 style="color:white; margin: 5% 0 0 5%; position: fixed; background-color:##2E1045;"> <b> {{ player1Name }}</b></h5>
+        <h5 style="color:white; margin: 5% 0 0 82%; position: fixed; background-color:##2E1045;"> <b> {{ player2Name }}</b></h5>
         <img src="http://icons.iconarchive.com/icons/wikipedia/flags/256/ID-Indonesia-Flag-icon.png" alt="" style="width:5%; position:fixed; margin: 8% 0 0 7.5%;">
         <img src="https://vignette.wikia.nocookie.net/spacemonsters/images/8/85/PNGPIX-COM-Earth-Planet-Globe-World-Transparent-PNG-Image.png/revision/latest?cb=20171217074041&path-prefix=id" alt="" style="margin: 50% 0 0 10%;">
       </div>
       <div class="track" style="padding-top:0%; position:fixed;" v-if="gameState == 'ready'">
+
         <img class="roket" src="https://image.flaticon.com/icons/png/128/214/214337.png" alt="" v-bind:style=" { margin: rocket.position + 'px' }"/>
       </div>
       <div class="col s3" v-if="gameState == 'ready'">
@@ -94,6 +97,12 @@ export default {
     gameState () {
       this.player = this.$store.state.statusGame
       return this.$store.state.gameState
+    },
+    player1Name () {
+      return this.$store.state.player1
+    },
+    player2Name () {
+      return this.$store.state.player2
     }
   },
   methods: {

@@ -12,7 +12,9 @@ export default new Vuex.Store({
     roomName: '',
     statusGame: '',
     gameState: '',
-    currentValue: ''
+    currentValue: '',
+    player1: '',
+    player2: ''
   },
   mutations: {
     checkData (state, roomList) {
@@ -34,6 +36,12 @@ export default new Vuex.Store({
     },
     changeCurrentValue (state, payload) {
       state.currentValue = payload
+    },
+    changePlayer1Name  (state, payload) {
+      state.player1 = payload
+    },
+    changePlayer2Name  (state, payload) {
+      state.player2 = payload
     }
   },
   actions: {
@@ -47,6 +55,10 @@ export default new Vuex.Store({
               roomdatabase(i).set({Player1: {Name: allLobby[i].Player1.Name}, Player2: {Name: newPlayerName}, gameState: 'ready', value: 550})
               LobbyFound = true
               roomdatabase(i).on('value', function (snapshot) {
+                commit('changePlayer1Name', snapshot.val().Player1.Name)
+                commit('changePlayer2Name', snapshot.val().Player2.Name)
+                console.log(snapshot.val().Player1)
+                console.log(snapshot.val().Player2)
                 commit('changeCurrentValue', 550)
                 localStorage.setItem('roomname', i)
                 localStorage.setItem('player', 'player2')
