@@ -32,8 +32,8 @@
       </div>
     </div>
     <div class="" v-if="player != ''">
-      <a class="btn red" v-if='buttonActive == true && player == "Player1"' @click='maju' style="margin: 0 0 0 6%;">Player 1</a>
-      <a class="btn" style="margin: 0 0 0 85%;" v-if='buttonActive == true && player == "Player2"' @click='mundur'>Player 2</a>
+      <a class="btn red" v-if='buttonActive == true && player == "Player1" && winner !== ""' @click='maju' style="margin: 0 0 0 6%;">Player 1</a>
+      <a class="btn" style="margin: 0 0 0 85%;" v-if='buttonActive == true && player == "Player2" && winner !== ""' @click='mundur'>Player 2</a>
     </div>
   </div>
 </template>
@@ -58,10 +58,6 @@ export default {
     }
   },
   created () {
-    let self = this
-    var getRoomName = localStorage.getItem('roomname')
-    console.log(this.rocket)
-
 
   },
   mounted(){
@@ -92,15 +88,17 @@ export default {
     // },
     maju () {
       if (this.rocket.maju <= 1060) {
-        console.log('THIS', this)
         var self = this
         var getRoomName = localStorage.getItem('roomname')
-        console.log(getRoomName)
         roomdatabase(getRoomName).once('value', function (snapshot) {
-          // console.log("snapshot update val ",snapshot.val())
           let object = snapshot.val()
+          self.rocket.maju = snapshot.val().value
+          var array = ['0 0 0', self.rocket.maju]
+          var joinn = array.join(' ')
+          self.rocket.position = joinn
           object.value += 10
           roomdatabase(getRoomName).set(object)
+          console.log('adsfadsf',joinn)
           roomdatabase(getRoomName).on('value',function(snapshot){
             self.rocket.maju = snapshot.val().value
             var array = ['0 0 0', self.rocket.maju]
@@ -117,11 +115,15 @@ export default {
       if (this.rocket.maju >= 70) {
         var self = this
         var getRoomName = localStorage.getItem('roomname')
-        console.log(getRoomName)
         roomdatabase(getRoomName).once('value', function (snapshot) {
           let object = snapshot.val()
+          self.rocket.maju = snapshot.val().value
+          var array = ['0 0 0', self.rocket.maju]
+          var joinn = array.join(' ')
+          self.rocket.position = joinn
           object.value -= 10
           roomdatabase(getRoomName).set(object)
+          console.log('adsfadsf',joinn)
           roomdatabase(getRoomName).on('value',function(snapshot){
             self.rocket.maju = snapshot.val().value
             var array = ['0 0 0', self.rocket.maju]
