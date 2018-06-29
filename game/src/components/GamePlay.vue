@@ -22,6 +22,7 @@
           </div>
         </div>
       </div>
+
     </div>
     <div class="" style="margin: -10% 0 0 -9%; position:fixed;">
       <img src="http://4.bp.blogspot.com/-aplXFI9fzIs/U-O901KtK4I/AAAAAAAAAgI/8jf7Zeo0ouA/s1600/explosion_time_animate.gif" alt="" v-if='rocket.maju<=70'>
@@ -39,6 +40,7 @@
         <img class="roket" src="https://image.flaticon.com/icons/png/128/214/214337.png" alt="" v-bind:style=" { margin: rocket.position + 'px' }"/>
       </div>
       <div class="col s3" v-if="gameState == 'ready'">
+
         <img src="http://icons.iconarchive.com/icons/wikipedia/flags/256/IL-Israel-Flag-icon.png" alt="" style="width:5%; position:fixed; margin: 8.3% 0 0 61%;">
         <img src="https://vignette.wikia.nocookie.net/spacemonsters/images/8/85/PNGPIX-COM-Earth-Planet-Globe-World-Transparent-PNG-Image.png/revision/latest?cb=20171217074041&path-prefix=id" alt="" style="margin: 53% 0 0 240%;">
       </div>
@@ -82,7 +84,6 @@ export default {
     var getRoomName = localStorage.getItem('roomname')
     console.log(this.rocket)
 
-
   },
   mounted(){
   },
@@ -112,15 +113,18 @@ export default {
     // },
     maju () {
       if (this.rocket.maju <= 1060) {
-        console.log('THIS', this)
         var self = this
         var getRoomName = localStorage.getItem('roomname')
-        console.log(getRoomName)
         roomdatabase(getRoomName).once('value', function (snapshot) {
-          // console.log("snapshot update val ",snapshot.val())
           let object = snapshot.val()
+          self.rocket.maju = snapshot.val().value
+          var array = ['0 0 0', self.rocket.maju]
+          var joinn = array.join(' ')
+          self.rocket.position = joinn
           object.value += 10
           roomdatabase(getRoomName).set(object)
+          console.log('adsfadsf',joinn)
+          
           roomdatabase(getRoomName).on('value',function(snapshot){
             self.rocket.maju = snapshot.val().value
             var array = ['0 0 0', self.rocket.maju]
@@ -137,11 +141,17 @@ export default {
       if (this.rocket.maju >= 70) {
         var self = this
         var getRoomName = localStorage.getItem('roomname')
-        console.log(getRoomName)
+
         roomdatabase(getRoomName).once('value', function (snapshot) {
           let object = snapshot.val()
+          self.rocket.maju = snapshot.val().value
+          var array = ['0 0 0', self.rocket.maju]
+          var joinn = array.join(' ')
+          self.rocket.position = joinn
           object.value -= 10
           roomdatabase(getRoomName).set(object)
+          console.log('adsfadsf',joinn)
+          
           roomdatabase(getRoomName).on('value',function(snapshot){
             self.rocket.maju = snapshot.val().value
             var array = ['0 0 0', self.rocket.maju]
